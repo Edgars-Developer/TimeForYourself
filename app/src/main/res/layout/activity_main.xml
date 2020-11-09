@@ -193,7 +193,7 @@
         android:layout_width="59dp"
         android:layout_height="46dp"
         android:layout_marginBottom="24dp"
-        android:background="@android:color/transparent"
+        android:background="#3C3F41"
         android:scaleType="centerCrop"
         android:tint="#5AB1F6"
         app:layout_constraintBottom_toBottomOf="parent"
