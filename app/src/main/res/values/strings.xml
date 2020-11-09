@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">TimeForYourself</string>
+    <string name="sunset">Sunset</string>
+    <string name="todo">TODO</string>
 </resources>
