@@ -63,6 +63,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="192dp"
         android:backgroundTint="#5AB1F6"
+        android:text="@string/paradise"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textColorHint="#B12323"
