@@ -7,5 +7,4 @@
     tools:context=".Paradise"
     android:background="@drawable/paradise"
     >
-
 </androidx.constraintlayout.widget.ConstraintLayout>

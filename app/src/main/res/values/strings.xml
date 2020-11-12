@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">TimeForYourself</string>
-    <string name="sunset">Sunset</string>
     <string name="todo">TODO</string>
-    <string name="paradise">Paradise</string>
+    <string name="paradise"> Find your paradise</string>
+    <string name="sea_vibes">Sea vibes</string>
+    <string name="delightful_morning">Delightful morning</string>
+    <string name="the_energy_of_the_forest">The energy of the forest</string>
+    <string name="power_of_ocean">Power of ocean</string>
+    <string name="find_yourself">Find Yourself</string>
+    <string name="evening_calm">Evening calm</string>
+    <string name="sounds_of_happiness">Sounds of happiness</string>
+    <string name="free_your_mind">Free your mind</string>
+    <string name="stay_focused_and_balanced">Stay focused and balanced</string>
 </resources>
