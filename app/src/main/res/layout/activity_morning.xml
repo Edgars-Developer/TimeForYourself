@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Morning">
+    tools:context=".Morning"
+    android:background="@drawable/morning">
 
 </androidx.constraintlayout.widget.ConstraintLayout>

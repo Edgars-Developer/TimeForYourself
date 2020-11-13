@@ -9,6 +9,6 @@ public class FreeYourMind extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_free_your_mind);
+        setContentView(R.layout.activity_free_your);
     }
 }

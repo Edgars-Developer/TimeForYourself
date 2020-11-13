@@ -4,6 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Sea">
-
+    tools:context=".Sea"
+    android:background="@drawable/sea">
 </androidx.constraintlayout.widget.ConstraintLayout>
