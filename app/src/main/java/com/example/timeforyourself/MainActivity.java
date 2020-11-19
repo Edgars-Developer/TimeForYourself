@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.widget.Button;
 import android.view.View;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Button button8 = findViewById(R.id.btn8);
         Button button9 = findViewById(R.id.btn9);
         Button button10 = findViewById(R.id.btn10);
+        ImageButton imb1 = findViewById(R.id.imb1);
 
         button.setOnClickListener(this);
         button2.setOnClickListener(this);
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button8.setOnClickListener(this);
         button9.setOnClickListener(this);
         button10.setOnClickListener(this);
+        imb1.setOnClickListener(this);
 }
     @Override
     public void onClick(View v){
@@ -79,6 +82,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         case R.id.btn10:
             Intent intent10 = new Intent(this, Focused.class);
             startActivity(intent10);
+            break;
+        case R.id.imb1:
+            Intent imb1 = new Intent (this, Configuration.class);
+            startActivity(imb1);
             break;
         }
 
