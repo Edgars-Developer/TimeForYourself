@@ -1,19 +1,22 @@
 package com.example.timeforyourself;
-import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
-import android.widget.Button;
-import android.view.View;
+import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
+    MediaPlayer player;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        player = null;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         Button button = findViewById(R.id.btn);
         Button button2 = findViewById(R.id.btn2);
         Button button3 = findViewById(R.id.btn3);
@@ -38,7 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button9.setOnClickListener(this);
         button10.setOnClickListener(this);
         imb1.setOnClickListener(this);
-}
+    }
+
     @Override
     public void onClick(View v){
 
@@ -48,6 +52,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
             break;
         case R.id.btn2:
+            MediaPlayer player2 = MediaPlayer.create(this, R.raw.parad);
+            player2.start();
             Intent intent2 = new Intent(this, Paradise.class);
             startActivity(intent2);
             break;

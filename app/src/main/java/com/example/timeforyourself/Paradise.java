@@ -1,8 +1,9 @@
 package com.example.timeforyourself;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.media.MediaPlayer;
 import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Paradise extends AppCompatActivity {
 
@@ -10,5 +11,6 @@ public class Paradise extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_paradise);
+
     }
 }
