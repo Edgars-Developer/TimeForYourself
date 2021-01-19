@@ -11,9 +11,21 @@
     <string name="sounds_of_happiness">Sounds of happiness</string>
     <string name="free_your_mind">Free your mind</string>
     <string name="stay_focused_and_balanced">Stay focused and balanced</string>
-    <string name="todo1">TODO</string>
     <string name="share">Share</string>
     <string name="rate_us">Rate us</string>
     <string name="feedback">Feedback</string>
     <string name="support_us">Support us</string>
+    <string name="spinnertitle">Set up timer</string>
+    <string-array name="timer">
+        <item>Timer off</item>
+        <item>Set up your timer</item>
+        <item>5 minutes</item>
+        <item>10 minutes</item>
+        <item>15 minutes</item>
+        <item>20 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>2 hours</item>
+        <item>4 hours</item>
+    </string-array>
 </resources>
