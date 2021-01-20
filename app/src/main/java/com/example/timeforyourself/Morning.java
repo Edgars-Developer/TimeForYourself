@@ -42,29 +42,23 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         mTextViewCountDown = findViewById(R.id.textView);
         mTextViewCountDown.setVisibility(View.INVISIBLE);
 
-        TimerBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                spinner.setSelection(0); // onItemSelected chose case 0
-                spinner.performClick();
-                stopCountdown();
-            }
+        TimerBtn.setOnClickListener(v -> {
+            spinner.setSelection(0); // onItemSelected chose case 0
+            spinner.performClick();
+            stopCountdown();
         });
 
-        PlayPause.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v)  {
+        PlayPause.setOnClickListener(v -> {
 
-                if (player.isPlaying()) {
-                    PlayPause.setImageResource(R.drawable.play); // in java code :srcCompat="@drawable/"
-                    player.pause();
-                } else {
-                    player.start();
-                    PlayPause.setImageResource(R.drawable.pause);
+            if (player.isPlaying()) {
+                PlayPause.setImageResource(R.drawable.play); // in java code :srcCompat="@drawable/"
+                player.pause();
+            } else {
+                player.start();
+                PlayPause.setImageResource(R.drawable.pause);
 
-                }
-                PlayPause.setBackgroundResource(R.drawable.spinner_style);
             }
+            PlayPause.setBackgroundResource(R.drawable.spinner_style);
         }); // One button can make two actions with switch images
     }
 
@@ -84,29 +78,12 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
             switch (position) {
-
                     case 0:
                         mTextViewCountDown.setVisibility(View.INVISIBLE);
                         PlayPause.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-                        PlayPause.setVisibility(View.INVISIBLE);
-                        mTextViewCountDown.setVisibility(View.VISIBLE);
-                        timer = new CountDownTimer(3000, 100) {
-                            @SuppressLint("DefaultLocale")
-                            public void onTick(long millisUntilFinished) {
-                                mTextViewCountDown.setText(String.format("%02d:%02d",
-                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                            }
 
-                            public void onFinish() {
-                                PlayPause.setVisibility(View.VISIBLE);
-                                mTextViewCountDown.setVisibility(View.INVISIBLE);
-                                PlayPause.setImageResource(R.drawable.play);
-                                player.pause();
-                            }
-                        }.start();
                         break;
                     case 2:
                             PlayPause.setVisibility(View.INVISIBLE);
@@ -126,7 +103,6 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                                     player.pause();
                                 }
                             }.start();
-
                         break;
                     case 3:
                         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -139,14 +115,205 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                             }
 
                             public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
                                 mTextViewCountDown.setVisibility(View.INVISIBLE);
                                 PlayPause.setImageResource(R.drawable.play);
                                 player.pause();
-
                             }
                         }.start();
                         break;
-                }
+                    case 4:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(900000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                mTextViewCountDown.setText(String.format("%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 5:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(1200000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                mTextViewCountDown.setText(String.format("%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 6:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(1800000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                mTextViewCountDown.setText(String.format("%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 7:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(2400000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                mTextViewCountDown.setText(String.format("%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 8:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(3600000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                if (millisUntilFinished<3600000)
+                                        mTextViewCountDown.setText(String.format("%02d:%02d",
+                                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                else
+                                mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 9:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(7200000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                if (millisUntilFinished<3600000)
+                                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                else
+                                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 10:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(14400000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                if (millisUntilFinished<3600000)
+                                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                else
+                                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                        break;
+                    case 11:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(21600000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                if (millisUntilFinished<3600000)
+                                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                else
+                                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+                    case 12:
+                        PlayPause.setVisibility(View.INVISIBLE);
+                        mTextViewCountDown.setVisibility(View.VISIBLE);
+                        timer = new CountDownTimer(28800000, 100) {
+                            @SuppressLint("DefaultLocale")
+                            public void onTick(long millisUntilFinished) {
+                                mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                            }
+                            public void onFinish() {
+                                PlayPause.setVisibility(View.VISIBLE);
+                                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                                PlayPause.setImageResource(R.drawable.play);
+                                player.pause();
+                            }
+                        }.start();
+
+                   }
             }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

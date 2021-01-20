@@ -19,13 +19,16 @@
     <string-array name="timer">
         <item>Timer off</item>
         <item>Set up your timer</item>
-        <item>5 minutes</item>
-        <item>10 minutes</item>
-        <item>15 minutes</item>
-        <item>20 minutes</item>
-        <item>30 minutes</item>
-        <item>1 hour</item>
-        <item>2 hours</item>
+        <item>5 Minutes</item>
+        <item>10 Minutes</item>
+        <item>15 Minutes</item>
+        <item>20 Minutes</item>
+        <item>30 Minutes</item>
+        <item>40 Minutes</item>
+        <item>1 Hour</item>
+        <item>2 Hours</item>
         <item>4 hours</item>
+        <item>6 Hours</item>
+        <item>8 Hours</item>
     </string-array>
 </resources>
