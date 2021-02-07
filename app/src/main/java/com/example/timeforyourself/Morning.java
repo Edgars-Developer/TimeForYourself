@@ -1,6 +1,7 @@
 package com.example.timeforyourself;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -21,11 +22,9 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
     private CountDownTimer timer;
     private ImageButton TimerBtn;
     private ImageButton PlayPause;
-    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morning);
         final Spinner spinner = findViewById(R.id.spinner);
@@ -62,6 +61,30 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         }); // One button can make two actions with switch images
     }
 
+    private void showAlert() {
+        final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Morning.this);
+        myBuilder.setTitle("Choose your timer");
+        View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
+        myBuilder.setView(mView);
+        Spinner mSpinner = mView.findViewById(R.id.spinner2);
+        Spinner mSpinner1 = mView.findViewById(R.id.spinner3);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinner.setAdapter(adapter);
+        mSpinner1.setAdapter(adapter1);
+        myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> {
+
+
+
+        });
+        AlertDialog dialog = myBuilder.create();
+        dialog.show();
+
+
+    }
+
     @Override
     public void onBackPressed() {
         super.onBackPressed();
@@ -73,6 +96,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
             if (timer != null) {
                 timer.cancel();
             }
+
     }
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -83,7 +107,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                         PlayPause.setVisibility(View.VISIBLE);
                         break;
                     case 1:
-
+                        showAlert();
                         break;
                     case 2:
                             PlayPause.setVisibility(View.INVISIBLE);
@@ -105,6 +129,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                             }.start();
                         break;
                     case 3:
+                        PlayPause.setVisibility(View.INVISIBLE);
                         mTextViewCountDown.setVisibility(View.VISIBLE);
                         timer = new CountDownTimer(600000, 100) {
                             @SuppressLint("DefaultLocale")
@@ -300,10 +325,15 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                         timer = new CountDownTimer(28800000, 100) {
                             @SuppressLint("DefaultLocale")
                             public void onTick(long millisUntilFinished) {
-                                mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                if (millisUntilFinished<3600000)
+                                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                                else
+                                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
                             }
                             public void onFinish() {
                                 PlayPause.setVisibility(View.VISIBLE);
