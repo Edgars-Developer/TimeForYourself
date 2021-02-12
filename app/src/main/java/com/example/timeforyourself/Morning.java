@@ -2,6 +2,7 @@ package com.example.timeforyourself;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,12 +24,13 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
     private CountDownTimer timer;
     private ImageButton TimerBtn;
     private ImageButton PlayPause;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morning);
-        final Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.timer, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
@@ -68,21 +71,44 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         myBuilder.setView(mView);
         Spinner mSpinner = mView.findViewById(R.id.spinner2);
         Spinner mSpinner1 = mView.findViewById(R.id.spinner3);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinner.setAdapter(adapter);
         mSpinner1.setAdapter(adapter1);
-        myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> {
+
+        myBuilder.setPositiveButton("Start Timer", (dialog, which) -> {
+            PlayPause.setVisibility(View.INVISIBLE);
+            mTextViewCountDown.setVisibility(View.VISIBLE);
+
+            long h = mSpinner.getSelectedItemPosition();
+            long m = mSpinner1.getSelectedItemPosition();
 
 
+            long result = h + m;
+            PlayPause.setVisibility(View.INVISIBLE);
+            mTextViewCountDown.setVisibility(View.VISIBLE);
+
+            timer = new CountDownTimer(result, 100) {
+                @SuppressLint("DefaultLocale")
+                public void onTick(long millisUntilFinished) {
+                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                }
+
+                public void onFinish() {
+                    PlayPause.setVisibility(View.VISIBLE);
+                    mTextViewCountDown.setVisibility(View.INVISIBLE);
+                    PlayPause.setImageResource(R.drawable.play);
+                    player.pause();
+                }
+            }.start();
 
         });
         AlertDialog dialog = myBuilder.create();
         dialog.show();
-
-
     }
 
     @Override
@@ -319,6 +345,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                                 player.pause();
                             }
                         }.start();
+                        break;
                     case 12:
                         PlayPause.setVisibility(View.INVISIBLE);
                         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -342,7 +369,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                                 player.pause();
                             }
                         }.start();
-
+                        break;
                    }
             }
     @Override

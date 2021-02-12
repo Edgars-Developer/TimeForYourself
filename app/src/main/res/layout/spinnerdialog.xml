@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:theme="@android:style/Theme.Holo.Dialog"
     android:orientation="vertical">
+
+    <!-- Theme.Holo.Dialog makes more beautiful UI for Dialog -->
 
     <Spinner
         android:id="@+id/spinner3"
-        android:layout_width="90dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,7 +20,7 @@
 
     <Spinner
         android:id="@+id/spinner2"
-        android:layout_width="90dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_marginTop="40dp"
         app:layout_constraintEnd_toStartOf="@+id/spinner3"
@@ -28,7 +30,7 @@
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="90dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:text="@string/hours"
@@ -41,7 +43,7 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="90dp"
+        android:layout_width="70dp"
         android:layout_height="50dp"
         android:layout_marginTop="8dp"
         android:text="@string/minutes"
