@@ -6,6 +6,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:popupBackground">#FF4081</item>
-    </style>
 
+    </style>
 </resources>
