@@ -9,156 +9,177 @@
 
     <Button
         android:id="@+id/btn"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="136dp"
+        android:layout_marginTop="130dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button_style"
         android:text="@string/delightful_morning"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.29000002"
+        app:layout_constraintVertical_chainStyle="spread" />
 
     <Button
         android:id="@+id/btn2"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button2_style"
         android:text="@string/paradise"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn" />
 
     <Button
         android:id="@+id/btn3"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button3_style"
         android:text="@string/the_energy_of_the_forest"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn4"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn2" />
 
     <Button
         android:id="@+id/btn4"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="280dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button4_style"
-
         android:text="@string/sea_vibes"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn5"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn3" />
 
     <Button
         android:id="@+id/btn5"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="328dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button5_style"
         android:text="@string/power_of_ocean"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn6"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn4" />
 
     <Button
         android:id="@+id/btn6"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="376dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button6_style"
         android:text="@string/evening_calm"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textColorHint="#B12323"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn7"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn5" />
 
     <Button
         android:id="@+id/btn7"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="424dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button7_style"
         android:text="@string/sounds_of_happiness"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn8"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn6" />
 
     <Button
         android:id="@+id/btn8"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="472dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button8_style"
         android:text="@string/find_yourself"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textColorHint="#B12323"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn9"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn7" />
 
     <Button
         android:id="@+id/btn9"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="520dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         android:background="@drawable/button9_style"
         android:text="@string/free_your_mind"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/btn10"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn8" />
 
     <Button
         android:id="@+id/btn10"
-        android:layout_width="378dp"
+        android:layout_width="330dp"
         android:layout_height="40dp"
-        android:layout_marginTop="568dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="37dp"
         android:background="@drawable/button10_style"
         android:text="@string/stay_focused_and_balanced"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
         android:textColor="#0C185C"
         android:textStyle="italic"
+        app:layout_constraintBottom_toTopOf="@+id/imb1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/btn9" />
 
     <ImageButton
         android:id="@+id/imb1"

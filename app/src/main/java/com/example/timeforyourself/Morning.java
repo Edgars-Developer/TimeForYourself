@@ -4,8 +4,6 @@ import android.annotation.SuppressLint;
 import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.icu.text.CaseMap;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,7 +18,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.AlertDialogLayout;
 
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
@@ -32,49 +29,55 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
     private ImageButton PlayPause;
     private long TIMER_DURATION; // hours for mSpinner
     private long TIMER_DURATION1; // minutes for mSpinner1
+    private Spinner spinner;
     private Spinner mSpinner;
     private Spinner mSpinner1;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morning);
-        final Spinner spinner = findViewById(R.id.spinner);
+        spinner = findViewById(R.id.spinner);
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.timer, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_list_item_single_choice);
         spinner.setAdapter(adapter);
         spinner.setOnItemSelectedListener(this);
 
         player = MediaPlayer.create(this, R.raw.morn);
         player.start();
         player.setLooping(true);
-        PlayPause = this.findViewById(R.id.btnstart);
+        PlayPause = this.findViewById(R.id.btnStart);
         ImageButton timerBtn = findViewById(R.id.timer);
         mTextViewCountDown = findViewById(R.id.textView);
         mTextViewCountDown.setVisibility(View.INVISIBLE);
 
-        timerBtn.setOnClickListener(v -> {
-            spinner.setSelection(0); // onItemSelected chose case 0
-            spinner.performClick();
-            stopCountdown();
-        });
+            timerBtn.setOnClickListener(v -> {
+                spinner.performClick();
+                spinner.setSelection(0);
+                stopCountdown();
+            });
 
-        PlayPause.setOnClickListener(v -> {
+            PlayPause.setOnClickListener(v -> {
 
-            if (player.isPlaying()) {
-                PlayPause.setImageResource(R.drawable.play); // in java code :srcCompat="@drawable/"
-                player.pause();
-            } else {
-                player.start();
-                PlayPause.setImageResource(R.drawable.pause);
+                if (player.isPlaying()) {
+                    PlayPause.setImageResource(R.drawable.play); // in java code :srcCompat="@drawable/"
+                    player.pause();
+                } else {
+                    player.start();
+                    PlayPause.setImageResource(R.drawable.pause);
 
-            }
-            PlayPause.setBackgroundResource(R.drawable.spinner_style);
-        }); // One button can make two actions with switch images
+                }
+                PlayPause.setBackgroundResource(R.drawable.spinner_style);
+            }); // One button can make two actions with switch images
     }
+
+
 
     @SuppressLint("SetTextI18n")
     private void showAlert() {
         final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Morning.this,R.style.ThemeOverlay_AppCompat_Dialog_Alert);
+
         // Modify AlertDialog title (( change tex color, size and put in center)
         TextView title = new TextView(this);
         title.setText("Choose your timer");
@@ -83,28 +86,27 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         title.setTextSize(20);
         title.setGravity(Gravity.CENTER);
         myBuilder.setCustomTitle(title);
-
         View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
         myBuilder.setView(mView);
         mSpinner = mView.findViewById(R.id.spinner2);
         mSpinner1 = mView.findViewById(R.id.spinner3);
         ArrayAdapter<String> adapter = new ArrayAdapter<>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
         ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Morning.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
+        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         mSpinner.setAdapter(adapter);
         mSpinner1.setAdapter(adapter1);
-        mSpinner.getOnItemClickListener();
+
 
 
 
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
         int spinnerValue = sharedPref.get().getInt("spinnerChoice",-1);
         if(spinnerValue != -1)
-            mSpinner.setSelection(spinnerValue); // select last selected item
+            mSpinner.setSelection(spinnerValue); // save select last selected item
         int spinnerValue1 = sharedPref.get().getInt("spinnerChoice1",-1);
         if(spinnerValue1 != -1)
-            mSpinner1.setSelection(spinnerValue1); // select last selected item
+            mSpinner1.setSelection(spinnerValue1); // save select last selected item
 
         myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> { //custom contDownTimer
             int Choice = mSpinner.getSelectedItemPosition(); // save last selected item
@@ -254,8 +256,9 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
     } // stop music when you pressed the back button
 
     private void stopCountdown() {
-        if (timer != null) {
+        if(timer != null){
             timer.cancel();
+            timer = null;
         }
     }
     @Override
@@ -496,7 +499,12 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                     }
                 }.start();
                 break;
+            default:
+                stopCountdown();
+                break;
+
         }
+
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {

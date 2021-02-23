@@ -15,7 +15,7 @@
     <string name="rate_us">Rate us</string>
     <string name="feedback">Feedback</string>
     <string name="support_us">Support us</string>
-    <string name="spinnertitle">Set up timer</string>
+    <string name="spinner_title">Set up timer</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string-array name="timer">
@@ -58,7 +58,6 @@
         <item> 21 </item>
         <item> 22 </item>
         <item> 23 </item>
-
     </string-array>
     <string-array name="minutes">
         <item> 00 </item>

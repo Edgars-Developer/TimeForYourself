@@ -9,7 +9,7 @@
 
 
     <ImageButton
-        android:id="@+id/btnstart"
+        android:id="@+id/btnStart"
         android:layout_width="85dp"
         android:layout_height="85dp"
         android:background="@drawable/button_style"
@@ -30,14 +30,15 @@
         android:layout_marginEnd="4dp"
         android:background="@android:color/transparent"
         android:entries="@array/timer"
-        android:prompt="@string/spinnertitle"
         android:spinnerMode="dialog"
+        android:prompt="@string/spinner_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/btnstart"
+        app:layout_constraintStart_toEndOf="@+id/btnStart"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.91" />
+        app:layout_constraintVertical_bias="0.91"
+      />
 
     <TextView
         android:id="@+id/textView"
@@ -53,7 +54,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/timer"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/btnstart"
+        app:layout_constraintStart_toStartOf="@+id/btnStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.91" />
 
@@ -66,7 +67,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/btnstart"
+        app:layout_constraintStart_toEndOf="@+id/btnStart"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.91"
         app:srcCompat="@drawable/timer" />
