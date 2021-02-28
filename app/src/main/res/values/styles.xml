@@ -7,9 +7,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:popupBackground">#FF4081</item>
     </style>
-    <style name="customSpinnerDialog">
-        <item name="android:textColor">@color/black</item>
-        <item name="android:paddingStart">2dp</item>
-        <item name="android:scrollbars">none</item>
-    </style>
+
+
+
 </resources>

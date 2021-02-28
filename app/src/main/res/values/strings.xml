@@ -15,12 +15,11 @@
     <string name="rate_us">Rate us</string>
     <string name="feedback">Feedback</string>
     <string name="support_us">Support us</string>
-    <string name="spinner_title">Set up timer</string>
     <string name="hours">Hours</string>
     <string name="minutes">Minutes</string>
     <string-array name="timer">
         <item>Timer off</item>
-        <item>Set up your timer</item>
+        <item>Custom timer</item>
         <item>5 Minutes</item>
         <item>10 Minutes</item>
         <item>15 Minutes</item>
