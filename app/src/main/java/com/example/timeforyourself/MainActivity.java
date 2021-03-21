@@ -40,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         button10.setOnClickListener(this);
         imb1.setOnClickListener(this);
     }
-
     @SuppressLint("NonConstantResourceId")
     @Override
     public void onClick(View v){
