@@ -2,16 +2,12 @@ package com.example.timeforyourself;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.Context;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -26,10 +22,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 
-import static android.R.layout.select_dialog_multichoice;
 import static android.R.layout.select_dialog_singlechoice;
 import static android.R.layout.simple_list_item_single_choice;
-import static android.R.layout.simple_spinner_dropdown_item;
+
 
 public class Morning extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private MediaPlayer player = new MediaPlayer();
@@ -41,24 +36,18 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
     private Spinner spinner;
     private Spinner mSpinner;
     private Spinner mSpinner1;
-
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_morning);
-
-
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, select_dialog_singlechoice, getResources().getStringArray(R.array.timer));
         adapter3.setDropDownViewResource(simple_list_item_single_choice);
         spinner.setAdapter(adapter3);
         spinner.setOnItemSelectedListener(this);
-        String title = centerString(50, "Set up timer");
+        String title = centerString(50, "Set a timer");
         spinner.setPrompt(title);
-
-
         player = MediaPlayer.create(this, R.raw.morn);
         player.start();
         player.setLooping(true);
@@ -83,7 +72,7 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                     PlayPause.setImageResource(R.drawable.pause);
 
                 }
-                PlayPause.setBackgroundResource(R.drawable.spinner_style);
+                PlayPause.setBackgroundResource(R.drawable.button_style);
             }); // One button can make two actions with switch images
     }
 
@@ -91,6 +80,57 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
 
+    public void timer(long s, long y){
+        PlayPause.setVisibility(View.INVISIBLE);
+        mTextViewCountDown.setVisibility(View.VISIBLE);
+        timer = new CountDownTimer(s, y) {
+            @SuppressLint("DefaultLocale")
+            public void onTick(long millisUntilFinished) {
+                if (millisUntilFinished<3600000)
+                    mTextViewCountDown.setText(String.format("%02d:%02d",
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                else
+                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                if (millisUntilFinished < 15000) {
+                    player.setVolume(0.9f, 0.9f);
+                }
+                if (millisUntilFinished <= 13000) {
+                    player.setVolume(0.8f, 0.8f);
+                }
+                if (millisUntilFinished <= 11000) {
+                    player.setVolume(0.7f, 0.7f);
+                }
+                if (millisUntilFinished <= 9000) {
+                    player.setVolume(0.6f, 0.6f);
+                }
+                if (millisUntilFinished <= 7000) {
+                    player.setVolume(0.5f, 0.5f);
+                }
+                if (millisUntilFinished <= 5000) {
+                    player.setVolume(0.4f, 0.4f);
+                }
+                if (millisUntilFinished <= 3000) {
+                    player.setVolume(0.3f, 0.3f);
+                }
+                if (millisUntilFinished <= 2000) {
+                    player.setVolume(0.2f, 0.2f);
+                }
+                if (millisUntilFinished <= 1000) {
+                    player.setVolume(0.1f, 0.1f);
+                }
+            }
+            public void onFinish() {
+                PlayPause.setVisibility(View.VISIBLE);
+                mTextViewCountDown.setVisibility(View.INVISIBLE);
+                PlayPause.setImageResource(R.drawable.play);
+                player.pause();
+            }
+        }.start();
+    }
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
@@ -98,258 +138,31 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
                 mTextViewCountDown.setVisibility(View.INVISIBLE);
                 PlayPause.setVisibility(View.VISIBLE);
                 break;
-            case 1:
-                showAlert();
-                break;
-            case 2:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(300000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 3:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(600000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 4:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(900000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 5:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(1200000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 6:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(1800000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 7:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(2400000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        mTextViewCountDown.setText(String.format("%02d:%02d",
-                                TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 8:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(3600000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished<3600000)
-                            mTextViewCountDown.setText(String.format("%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                        else
-                            mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 9:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(7200000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished<3600000)
-                            mTextViewCountDown.setText(String.format("%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                        else
-                            mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 10:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(14400000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished<3600000)
-                            mTextViewCountDown.setText(String.format("%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                        else
-                            mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 11:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(21600000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished<3600000)
-                            mTextViewCountDown.setText(String.format("%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                        else
-                            mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            case 12:
-                PlayPause.setVisibility(View.INVISIBLE);
-                mTextViewCountDown.setVisibility(View.VISIBLE);
-                timer = new CountDownTimer(28800000, 1000) {
-                    @SuppressLint("DefaultLocale")
-                    public void onTick(long millisUntilFinished) {
-                        if (millisUntilFinished<3600000)
-                            mTextViewCountDown.setText(String.format("%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                        else
-                            mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                                    TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                                    TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                                    TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                    }
-                    public void onFinish() {
-                        PlayPause.setVisibility(View.VISIBLE);
-                        mTextViewCountDown.setVisibility(View.INVISIBLE);
-                        PlayPause.setImageResource(R.drawable.play);
-                        player.pause();
-                    }
-                }.start();
-                break;
-            default:
-                stopCountdown();
-                break;
-
+            case 1:  showAlert(); break;
+            case 2:  timer(300000, 1000);   break;
+            case 3:  timer(600000, 1000);   break;
+            case 4:  timer(900000, 1000);   break;
+            case 5:  timer(1200000, 1000);  break;
+            case 6:  timer(1800000, 1000);  break;
+            case 7:  timer(2400000, 1000);  break;
+            case 8:  timer(3600000, 1000);  break;
+            case 9:  timer(7200000, 1000);  break;
+            case 10: timer(14400000, 1000); break;
+            case 11: timer(21600000, 1000); break;
+            case 12: timer(28800000, 1000); break;
+            default: stopCountdown(); break;
         }
-
     }
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
 
-
-
-
     @SuppressLint("SetTextI18n")
     private void showAlert() {
         final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Morning.this,R.style.ThemeOverlay_AppCompat_Dialog_Alert);
-
         // Modify AlertDialog title (( change tex color, size and put in center)
         TextView title = new TextView(this);
-        title.setText("Set your timer");
+        title.setText("Custom your timer");
         title.setPadding(50,50,50,50);
         title.setTextColor(Color.BLACK);
         title.setTextSize(18);
@@ -365,9 +178,6 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
         mSpinner.setAdapter(adapter);
         mSpinner1.setAdapter(adapter1);
-
-
-
 
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
         int spinnerValue = sharedPref.get().getInt("spinnerChoice",-1);

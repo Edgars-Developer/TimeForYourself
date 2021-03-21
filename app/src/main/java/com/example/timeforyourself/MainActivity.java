@@ -1,7 +1,6 @@
 package com.example.timeforyourself;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -10,7 +9,6 @@ import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,9 +49,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
             break;
         case R.id.btn2:
-            MediaPlayer player2 = MediaPlayer.create(this, R.raw.parad);
-            player2.start();
-            Intent intent2 = new Intent(this, Paradise.class);
+            Intent intent2 = new Intent(this , Paradise.class);
             startActivity(intent2);
             break;
         case R.id.btn3:
@@ -95,6 +91,4 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
 
     }
-
-
 }
