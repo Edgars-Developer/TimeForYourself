@@ -14,8 +14,10 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.concurrent.TimeUnit;
@@ -23,6 +25,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 import static android.R.layout.select_dialog_singlechoice;
 import static android.R.layout.simple_list_item_single_choice;
+
 
 public class Paradise extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private MediaPlayer player = new MediaPlayer();
@@ -32,16 +35,12 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
     private long TIMER_DURATION; // hours for mSpinner
     private long TIMER_DURATION1; // minutes for mSpinner1
     private Spinner spinner;
-    private Spinner mSpinner;
-    private Spinner mSpinner1;
-
-
 
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_paradise);
+        setContentView(R.layout.activity_morning);
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, select_dialog_singlechoice, getResources().getStringArray(R.array.timer));
         adapter3.setDropDownViewResource(simple_list_item_single_choice);
@@ -56,12 +55,15 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         ImageButton timerBtn = findViewById(R.id.timer);
         mTextViewCountDown = findViewById(R.id.textView);
         mTextViewCountDown.setVisibility(View.INVISIBLE);
+        mTextViewCountDown.setTextSize(50);
 
+        //Timer click
         timerBtn.setOnClickListener(v -> {
+            stopCountdown();
             spinner.performClick();
             spinner.setSelection(0);
-            stopCountdown();
         });
+        //Click to play and pause music
         PlayPause.setOnClickListener(v -> {
 
             if (player.isPlaying()) {
@@ -72,29 +74,29 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                 PlayPause.setImageResource(R.drawable.pause);
 
             }
-            PlayPause.setBackgroundResource(R.drawable.button2_style);
         }); // One button can make two actions with switch images
     }
-
+    // Put spinner title in the text
     public static String centerString (int width, String s) {
         return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
-
+    // Create a timer, after 15 seconds the sound volume decrease slowly
     public void timer(long s, long y){
-        PlayPause.setVisibility(View.INVISIBLE);
         mTextViewCountDown.setVisibility(View.VISIBLE);
         timer = new CountDownTimer(s, y) {
             @SuppressLint("DefaultLocale")
             public void onTick(long millisUntilFinished) {
-                if (millisUntilFinished<3600000)
+
+                mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
+                        TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
+                        TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
+                        TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+
+                if (millisUntilFinished<3600000){
                     mTextViewCountDown.setText(String.format("%02d:%02d",
                             TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished),
                             TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
-                else
-                    mTextViewCountDown.setText(String.format("%02d:%02d:%02d",
-                            TimeUnit.MILLISECONDS.toHours(millisUntilFinished),
-                            TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millisUntilFinished)),
-                            TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
+                }
                 if (millisUntilFinished < 15000) {
                     player.setVolume(0.9f, 0.9f);
                 }
@@ -124,22 +126,18 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                 }
             }
             public void onFinish() {
-                PlayPause.setVisibility(View.VISIBLE);
+                player.setVolume(1.0f, 1.0f);
                 mTextViewCountDown.setVisibility(View.INVISIBLE);
                 PlayPause.setImageResource(R.drawable.play);
                 player.pause();
             }
         }.start();
-
     }
-
+    // On click countDownTimer
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
-            case 0:
-                mTextViewCountDown.setVisibility(View.INVISIBLE);
-                PlayPause.setVisibility(View.VISIBLE);
-                break;
+            case 0: mTextViewCountDown.setVisibility(View.INVISIBLE); break;
             case 1:  showAlert(); break;
             case 2:  timer(300000, 1000);   break;
             case 3:  timer(600000, 1000);   break;
@@ -158,9 +156,7 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
-
-
-
+    //Click on custom timer
     @SuppressLint("SetTextI18n")
     private void showAlert() {
         final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Paradise.this,R.style.ThemeOverlay_AppCompat_Dialog_Alert);
@@ -174,36 +170,39 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         myBuilder.setCustomTitle(title);
         View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
         myBuilder.setView(mView);
-        mSpinner = mView.findViewById(R.id.spinner2);
-        mSpinner1 = mView.findViewById(R.id.spinner3);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Paradise.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Paradise.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSpinner.setAdapter(adapter);
-        mSpinner1.setAdapter(adapter1);
+
+        final NumberPicker pickerHours = mView.findViewById(R.id.numberpicker_main_picker);
+        final NumberPicker pickerMinutes = mView.findViewById(R.id.numberpicker_main_picker1);
+        pickerMinutes.setMaxValue(getResources().getStringArray(R.array.minutes).length - 1);
+        pickerMinutes.setDisplayedValues(getResources().getStringArray(R.array.minutes));
+        pickerHours.setMaxValue(getResources().getStringArray(R.array.hours).length - 1);
+        pickerHours.setDisplayedValues(getResources().getStringArray(R.array.hours));
+        pickerHours.setWrapSelectorWheel(true);
+        pickerMinutes.setWrapSelectorWheel(true);
 
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
-        int spinnerValue = sharedPref.get().getInt("spinnerChoice",-1);
-        if(spinnerValue != -1)
-            mSpinner.setSelection(spinnerValue); // save select last selected item
-        int spinnerValue1 = sharedPref.get().getInt("spinnerChoice1",-1);
-        if(spinnerValue1 != -1)
-            mSpinner1.setSelection(spinnerValue1); // save select last selected item
+        int value = sharedPref.get().getInt("Choice",-1);
+        if(value != -1)
+            pickerHours.setValue(value); // save select last selected item
+        int value1 = sharedPref.get().getInt("Choice1",-1);
+        if(value1 != -1)
+            pickerMinutes.setValue(value1); // save select last selected item
 
         myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> { //custom contDownTimer
-            int Choice = mSpinner.getSelectedItemPosition(); // save last selected item
-            int Choice1 = mSpinner1.getSelectedItemPosition(); // save last selected item
+
+            int Choice = pickerHours.getValue();// save last selected item
+            int Choice1 = pickerMinutes.getValue(); // save last selected item
             sharedPref.set(getSharedPreferences("FileName", 0));
             SharedPreferences.Editor prefEditor = sharedPref.get().edit();
-            prefEditor.putInt("spinnerChoice",Choice);
-            prefEditor.putInt("spinnerChoice1",Choice1);
+            prefEditor.putInt("Choice",Choice);
+            prefEditor.putInt("Choice1",Choice1);
             prefEditor.apply();
 
-            int hours = mSpinner.getSelectedItemPosition();
-            int minutes = mSpinner1.getSelectedItemPosition();
+            int hours = pickerHours.getValue();
+            int minutes = pickerMinutes.getValue();
+
             switch (hours) {
-                case 0: stopCountdown();break;
+                case 0: TIMER_DURATION = 0; break;
                 case 1: TIMER_DURATION = 3600000;  break;
                 case 2: TIMER_DURATION = 7200000;  break;
                 case 3: TIMER_DURATION = 10800000; break;
@@ -227,9 +226,10 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                 case 21: TIMER_DURATION = 75600000; break;
                 case 22: TIMER_DURATION = 79200000; break;
                 case 23: TIMER_DURATION = 82800000; break;
+                default: stopCountdown(); break;
             }
             switch (minutes) {
-                case 0: stopCountdown(); break;
+                case 0: TIMER_DURATION1 = 0; break;
                 case 1: TIMER_DURATION1 = 60000; break;
                 case 2: TIMER_DURATION1 = 120000; break;
                 case 3: TIMER_DURATION1 = 180000; break;
@@ -291,9 +291,8 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                 case 59: TIMER_DURATION1 = 3540000; break;
             }
             long result = TIMER_DURATION + TIMER_DURATION1;
-            PlayPause.setVisibility(View.INVISIBLE);
-            mTextViewCountDown.setVisibility(View.VISIBLE);
 
+            mTextViewCountDown.setVisibility(View.VISIBLE);
             timer = new CountDownTimer(result, 1000) {
                 @SuppressLint("DefaultLocale")
                 public void onTick(long millisUntilFinished) {
@@ -308,17 +307,14 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                                 TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished))));
                 }
                 public void onFinish() {
-                    PlayPause.setVisibility(View.VISIBLE);
                     mTextViewCountDown.setVisibility(View.INVISIBLE);
                     PlayPause.setImageResource(R.drawable.play);
                     player.pause();
                 }
             }.start();
         });
-
         final AlertDialog dialog = myBuilder.create();
         dialog.show();
-
         //Modify AlertDialog positive button ( change tex color, size and put in center)
         final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         LinearLayout parent = (LinearLayout) positiveButton.getParent();
@@ -329,18 +325,21 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         positiveButton.setTextColor(Color.BLACK);
         positiveButton.setPadding(50,50,50,50);
         positiveButton.setTextSize(15);
+
     }
+    // stop music when you pressed the back button
     @Override
     public void onBackPressed() {
         super.onBackPressed();
         player.stop();
         player.release();
-    } // stop music when you pressed the back button
-
+    }
+    // turn off timer
     private void stopCountdown() {
         if(timer != null){
             timer.cancel();
             timer = null;
         }
     }
+
 }

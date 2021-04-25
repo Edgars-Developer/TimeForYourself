@@ -174,14 +174,6 @@ public class Ocean extends AppCompatActivity implements AdapterView.OnItemSelect
         myBuilder.setCustomTitle(title);
         View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
         myBuilder.setView(mView);
-        mSpinner = mView.findViewById(R.id.spinner2);
-        mSpinner1 = mView.findViewById(R.id.spinner3);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Ocean.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Ocean.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSpinner.setAdapter(adapter);
-        mSpinner1.setAdapter(adapter1);
 
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
         int spinnerValue = sharedPref.get().getInt("spinnerChoice",-1);

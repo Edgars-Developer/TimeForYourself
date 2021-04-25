@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.NumberPicker;
 import android.widget.Spinner;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,8 +35,6 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
     private Spinner spinner;
     private Spinner mSpinner;
     private Spinner mSpinner1;
-
-
 
     @SuppressLint("SetTextI18n")
     @Override
@@ -72,7 +71,6 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
                 PlayPause.setImageResource(R.drawable.pause);
 
             }
-            PlayPause.setBackgroundResource(R.drawable.button2_style);
         }); // One button can make two actions with switch images
     }
 
@@ -130,9 +128,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
                 player.pause();
             }
         }.start();
-
     }
-
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         switch (position) {
@@ -158,9 +154,6 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
     }
-
-
-
     @SuppressLint("SetTextI18n")
     private void showAlert() {
         final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Forest.this,R.style.ThemeOverlay_AppCompat_Dialog_Alert);
@@ -174,34 +167,37 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
         myBuilder.setCustomTitle(title);
         View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
         myBuilder.setView(mView);
-        mSpinner = mView.findViewById(R.id.spinner2);
-        mSpinner1 = mView.findViewById(R.id.spinner3);
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(Forest.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.hours));
-        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(Forest.this, android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.minutes));
-        adapter.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        adapter1.setDropDownViewResource(android.R.layout.simple_dropdown_item_1line);
-        mSpinner.setAdapter(adapter);
-        mSpinner1.setAdapter(adapter1);
+
+
+        final NumberPicker pickerMinutes = mView.findViewById(R.id.numberpicker_main_picker);
+        final NumberPicker pickerHours = mView.findViewById(R.id.numberpicker_main_picker1);
+        pickerHours.setMinValue(0);
+        pickerMinutes.setMaxValue(getResources().getStringArray(R.array.minutes).length - 1);
+        pickerMinutes.setDisplayedValues(getResources().getStringArray(R.array.minutes));
+        pickerHours.setMinValue(0);
+        pickerHours.setMaxValue(getResources().getStringArray(R.array.hours).length - 1);
+        pickerHours.setDisplayedValues(getResources().getStringArray(R.array.hours));
+        pickerHours.setWrapSelectorWheel(false);
+        pickerMinutes.setWrapSelectorWheel(false);
 
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
-        int spinnerValue = sharedPref.get().getInt("spinnerChoice",-1);
-        if(spinnerValue != -1)
-            mSpinner.setSelection(spinnerValue); // save select last selected item
-        int spinnerValue1 = sharedPref.get().getInt("spinnerChoice1",-1);
-        if(spinnerValue1 != -1)
-            mSpinner1.setSelection(spinnerValue1); // save select last selected item
+        int picValue = sharedPref.get().getInt("picChoise",-1);
+        if(picValue != -1)
+            pickerHours.setValue(picValue); // save select last selected item
+        int picValue1 = sharedPref.get().getInt("picChoise1",-1);
+        if(picValue1 != -1)
+            pickerHours.setValue(picValue1); // save select last selected item
 
         myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> { //custom contDownTimer
-            int Choice = mSpinner.getSelectedItemPosition(); // save last selected item
-            int Choice1 = mSpinner1.getSelectedItemPosition(); // save last selected item
+            int Choice = pickerHours.getValue(); // save last selected item
+            int Choice1 = pickerMinutes.getValue(); //
             sharedPref.set(getSharedPreferences("FileName", 0));
             SharedPreferences.Editor prefEditor = sharedPref.get().edit();
-            prefEditor.putInt("spinnerChoice",Choice);
-            prefEditor.putInt("spinnerChoice1",Choice1);
+            prefEditor.putInt("picChoise",Choice);
+            prefEditor.putInt("picChoise1",Choice1);
             prefEditor.apply();
-
-            int hours = mSpinner.getSelectedItemPosition();
-            int minutes = mSpinner1.getSelectedItemPosition();
+            int hours = pickerHours.getValue();
+            int minutes = pickerMinutes.getValue();
             switch (hours) {
                 case 0: stopCountdown();break;
                 case 1: TIMER_DURATION = 3600000;  break;
@@ -325,7 +321,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
         parent.setGravity(Gravity.CENTER_HORIZONTAL);
         View leftSpacer = parent.getChildAt(1);
         leftSpacer.setVisibility(View.GONE);
-        positiveButton.setBackgroundResource(R.drawable.button2_style);
+        positiveButton.setBackgroundResource(R.drawable.button3_style);
         positiveButton.setTextColor(Color.BLACK);
         positiveButton.setPadding(50,50,50,50);
         positiveButton.setTextSize(15);

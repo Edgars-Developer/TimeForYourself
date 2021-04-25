@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/mor"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/forest"
     tools:context=".Forest">
 
-
     <ImageButton
         android:id="@+id/btnStart"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:background="@drawable/button2_style"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/timer"
@@ -30,6 +28,7 @@
         android:layout_height="85dp"
         android:layout_marginEnd="4dp"
         android:background="@android:color/transparent"
+        android:visibility="invisible"
         android:textAlignment="center"
         android:gravity="center"
         android:spinnerMode="dialog"
@@ -50,7 +49,7 @@
         android:layout_marginEnd="92dp"
         android:textStyle="bold"
         android:textSize="20sp"
-        android:background="@drawable/button2_style"
+        android:background="@android:color/transparent"
         android:gravity="center"
         android:textColor="#FFFFFF"
         android:visibility="invisible"
@@ -65,7 +64,7 @@
         android:id="@+id/timer"
         android:layout_width="85dp"
         android:layout_height="85dp"
-        android:background="@drawable/button2_style"
+        android:background="@android:color/transparent"
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -74,6 +73,5 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.91"
         app:srcCompat="@drawable/timer" />
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>
