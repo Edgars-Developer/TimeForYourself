@@ -12,19 +12,32 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:fullBackupContent="@xml/backup_descriptor"
-        tools:ignore="AllowBackup">
-        <activity android:name=".Configuration"/>
-        <activity android:name=".Focused" />
-        <activity android:name=".FreeYourMind" />
-        <activity android:name=".FindYourself" />
-        <activity android:name=".Happiness" />
-        <activity android:name=".Calm" />
-        <activity android:name=".Ocean" />
-        <activity android:name=".Sea" />
-        <activity android:name=".Forest" />
-        <activity android:name=".Morning" />
-        <activity android:name=".Paradise" />
-        <activity android:name=".MainActivity">
+        tools:ignore="AllowBackup"
+        android:configChanges="orientation">
+        <activity android:name=".Configuration" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Focused" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".FreeYourMind" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".FindYourself" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Happiness" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Calm" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Ocean" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Sea" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Forest" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Morning" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".Paradise" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity" />
+        <activity android:name=".MainActivity" android:screenOrientation="portrait"
+            tools:ignore="LockedOrientationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

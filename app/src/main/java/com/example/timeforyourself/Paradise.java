@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.Gravity;
@@ -32,25 +33,26 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
     private TextView mTextViewCountDown;
     private CountDownTimer timer;
     private ImageButton PlayPause;
-    private long TIMER_DURATION; // hours for mSpinner
+    private long TIMER_DURATION; // hours for pickerHours
     private long TIMER_DURATION1; // minutes for mSpinner1
     private Spinner spinner;
-
+    private SoundPool soundPool;
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_morning);
+        setContentView(R.layout.activity_paradise);
         spinner = findViewById(R.id.spinner);
         ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, select_dialog_singlechoice, getResources().getStringArray(R.array.timer));
         adapter3.setDropDownViewResource(simple_list_item_single_choice);
         spinner.setAdapter(adapter3);
         spinner.setOnItemSelectedListener(this);
-        String title = centerString(50, "Set a timer");
+        String title = centerString(50, getString(R.string.setATimer));
         spinner.setPrompt(title);
         player = MediaPlayer.create(this, R.raw.parad);
-        player.start();
         player.setLooping(true);
+        player.start();
         PlayPause = this.findViewById(R.id.btnStart);
         ImageButton timerBtn = findViewById(R.id.timer);
         mTextViewCountDown = findViewById(R.id.textView);
@@ -60,8 +62,8 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         //Timer click
         timerBtn.setOnClickListener(v -> {
             stopCountdown();
-            spinner.performClick();
-            spinner.setSelection(0);
+            spinner.performClick(); // To open  spinner dialog
+            spinner.setSelection(0); // To restart the same timer
         });
         //Click to play and pause music
         PlayPause.setOnClickListener(v -> {
@@ -75,11 +77,13 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
 
             }
         }); // One button can make two actions with switch images
+
     }
     // Put spinner title in the text
     public static String centerString (int width, String s) {
         return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
+
     // Create a timer, after 15 seconds the sound volume decrease slowly
     public void timer(long s, long y){
         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -162,7 +166,7 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         final AlertDialog.Builder myBuilder = new AlertDialog.Builder(Paradise.this,R.style.ThemeOverlay_AppCompat_Dialog_Alert);
         // Modify AlertDialog title (( change tex color, size and put in center)
         TextView title = new TextView(this);
-        title.setText("Custom your timer");
+        title.setText(R.string.timerDuration);
         title.setPadding(50,50,50,50);
         title.setTextColor(Color.BLACK);
         title.setTextSize(18);
@@ -171,6 +175,7 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         View mView = getLayoutInflater().inflate(R.layout.spinnerdialog, null);
         myBuilder.setView(mView);
 
+        // NumberPicker
         final NumberPicker pickerHours = mView.findViewById(R.id.numberpicker_main_picker);
         final NumberPicker pickerMinutes = mView.findViewById(R.id.numberpicker_main_picker1);
         pickerMinutes.setMaxValue(getResources().getStringArray(R.array.minutes).length - 1);
@@ -180,22 +185,24 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         pickerHours.setWrapSelectorWheel(true);
         pickerMinutes.setWrapSelectorWheel(true);
 
-        AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences("FileName", MODE_PRIVATE));
-        int value = sharedPref.get().getInt("Choice",-1);
+        // It saves last pickers
+        AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences(getString(R.string.FileName), MODE_PRIVATE));
+        int value = sharedPref.get().getInt(getString(R.string.Choise),-1);
         if(value != -1)
-            pickerHours.setValue(value); // save select last selected item
-        int value1 = sharedPref.get().getInt("Choice1",-1);
+            pickerHours.setValue(value); // save the last selected item
+        int value1 = sharedPref.get().getInt(getString(R.string.Choice1),-1);
         if(value1 != -1)
-            pickerMinutes.setValue(value1); // save select last selected item
+            pickerMinutes.setValue(value1); // save the last selected item
 
-        myBuilder.setPositiveButton("Start Timer", (dialogInterface, which) -> { //custom contDownTimer
+        // On Start button action
+        myBuilder.setPositiveButton(R.string.startTimer, (dialogInterface, which) -> { //custom contDownTimer
 
-            int Choice = pickerHours.getValue();// save last selected item
-            int Choice1 = pickerMinutes.getValue(); // save last selected item
-            sharedPref.set(getSharedPreferences("FileName", 0));
+            int Choice = pickerHours.getValue();
+            int Choice1 = pickerMinutes.getValue();
+            sharedPref.set(getSharedPreferences(getString(R.string.FileName), 0));
             SharedPreferences.Editor prefEditor = sharedPref.get().edit();
-            prefEditor.putInt("Choice",Choice);
-            prefEditor.putInt("Choice1",Choice1);
+            prefEditor.putInt(getString(R.string.Choise),Choice); // show last selected item
+            prefEditor.putInt(getString(R.string.Choice1),Choice1); // show last selected item
             prefEditor.apply();
 
             int hours = pickerHours.getValue();
@@ -289,10 +296,12 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
                 case 57: TIMER_DURATION1 = 3420000; break;
                 case 58: TIMER_DURATION1 = 3480000; break;
                 case 59: TIMER_DURATION1 = 3540000; break;
+                default: stopCountdown(); break;
             }
             long result = TIMER_DURATION + TIMER_DURATION1;
 
             mTextViewCountDown.setVisibility(View.VISIBLE);
+
             timer = new CountDownTimer(result, 1000) {
                 @SuppressLint("DefaultLocale")
                 public void onTick(long millisUntilFinished) {
@@ -315,13 +324,14 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         });
         final AlertDialog dialog = myBuilder.create();
         dialog.show();
+
         //Modify AlertDialog positive button ( change tex color, size and put in center)
         final Button positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE);
         LinearLayout parent = (LinearLayout) positiveButton.getParent();
         parent.setGravity(Gravity.CENTER_HORIZONTAL);
         View leftSpacer = parent.getChildAt(1);
         leftSpacer.setVisibility(View.GONE);
-        positiveButton.setBackgroundResource(R.drawable.button2_style);
+        positiveButton.setBackgroundResource(R.drawable.button3_style);
         positiveButton.setTextColor(Color.BLACK);
         positiveButton.setPadding(50,50,50,50);
         positiveButton.setTextSize(15);
@@ -334,7 +344,7 @@ public class Paradise extends AppCompatActivity implements AdapterView.OnItemSel
         player.stop();
         player.release();
     }
-    // turn off timer
+    // turn off a timer
     private void stopCountdown() {
         if(timer != null){
             timer.cancel();
