@@ -169,7 +169,7 @@
         android:layout_width="330dp"
         android:layout_height="40dp"
         android:layout_marginTop="4dp"
-        android:layout_marginBottom="37dp"
+        android:layout_marginBottom="16dp"
         android:background="@drawable/button10_style"
         android:text="@string/stay_focused_and_balanced"
         android:textAppearance="@style/TextAppearance.AppCompat.Large"
@@ -190,8 +190,9 @@
         android:contentDescription="@string/todo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn10"
         app:srcCompat="@drawable/settings" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

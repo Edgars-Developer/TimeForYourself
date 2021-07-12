@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TimeForYourself</string>
+    <string name="app_name">Time4YourSelf</string>
     <string name="todo">TODO</string>
     <string name="paradise"> Find your paradise</string>
     <string name="sea_vibes">Sea vibes</string>
@@ -20,8 +20,8 @@
     <string name="timerDuration">Timer duration</string>
     <string name="startTimer">Start Timer</string>
     <string name="setATimer">Set a timer</string>
-    <string name="Choise">Choice</string>
-    <string name="Choice1">Choice1</string>
+    <string name="Choice">Choice</string>
+    <string name="Choice1">Choice!</string>
     <string name="FileName">FileName</string>
     <string-array name="timer">
         <item>Timer off</item>
@@ -33,10 +33,6 @@
         <item>30 Minutes</item>
         <item>40 Minutes</item>
         <item>1 Hour</item>
-        <item>2 Hours</item>
-        <item>4 hours</item>
-        <item>6 Hours</item>
-        <item>8 Hours</item>
     </string-array>
     <string-array name="hours">
         <item> 00 </item>

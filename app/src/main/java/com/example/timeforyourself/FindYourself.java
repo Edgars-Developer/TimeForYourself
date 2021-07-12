@@ -35,7 +35,6 @@ public class FindYourself extends AppCompatActivity implements AdapterView.OnIte
     private long TIMER_DURATION; // hours for pickerHours
     private long TIMER_DURATION1; // minutes for mSpinner1
     private Spinner spinner;
-
     @SuppressLint("SetTextI18n")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +47,11 @@ public class FindYourself extends AppCompatActivity implements AdapterView.OnIte
         spinner.setOnItemSelectedListener(this);
         String title = centerString(50, getString(R.string.setATimer));
         spinner.setPrompt(title);
-        player = MediaPlayer.create(this, R.raw.parad);
-        player.start();
+
+        player = MediaPlayer.create(this, R.raw.find);
         player.setLooping(true);
+        player.start();
+
         PlayPause = this.findViewById(R.id.btnStart);
         ImageButton timerBtn = findViewById(R.id.timer);
         mTextViewCountDown = findViewById(R.id.textView);
@@ -146,10 +147,6 @@ public class FindYourself extends AppCompatActivity implements AdapterView.OnIte
             case 6:  timer(1800000, 1000);  break;
             case 7:  timer(2400000, 1000);  break;
             case 8:  timer(3600000, 1000);  break;
-            case 9:  timer(7200000, 1000);  break;
-            case 10: timer(14400000, 1000); break;
-            case 11: timer(21600000, 1000); break;
-            case 12: timer(28800000, 1000); break;
             default: stopCountdown(); break;
         }
     }
@@ -183,7 +180,7 @@ public class FindYourself extends AppCompatActivity implements AdapterView.OnIte
 
         // It saves last pickers
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences(getString(R.string.FileName), MODE_PRIVATE));
-        int value = sharedPref.get().getInt(getString(R.string.Choise),-1);
+        int value = sharedPref.get().getInt(getString(R.string.Choice),-1);
         if(value != -1)
             pickerHours.setValue(value); // save the last selected item
         int value1 = sharedPref.get().getInt(getString(R.string.Choice1),-1);
@@ -197,7 +194,7 @@ public class FindYourself extends AppCompatActivity implements AdapterView.OnIte
             int Choice1 = pickerMinutes.getValue();
             sharedPref.set(getSharedPreferences(getString(R.string.FileName), 0));
             SharedPreferences.Editor prefEditor = sharedPref.get().edit();
-            prefEditor.putInt(getString(R.string.Choise),Choice); // show last selected item
+            prefEditor.putInt(getString(R.string.Choice),Choice); // show last selected item
             prefEditor.putInt(getString(R.string.Choice1),Choice1); // show last selected item
             prefEditor.apply();
 

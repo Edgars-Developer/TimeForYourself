@@ -27,13 +27,13 @@ import static android.R.layout.select_dialog_singlechoice;
 import static android.R.layout.simple_list_item_single_choice;
 
 
-public class Forest extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class Forest<async> extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     private MediaPlayer player = new MediaPlayer();
     private TextView mTextViewCountDown;
     private CountDownTimer timer;
     private ImageButton PlayPause;
     private long TIMER_DURATION; // hours for pickerHours
-    private long TIMER_DURATION1; // minutes for Forest.this
+    private long TIMER_DURATION1; // minutes for pickerMinutes
     private Spinner spinner;
 
     @SuppressLint("SetTextI18n")
@@ -48,9 +48,13 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
         spinner.setOnItemSelectedListener(this);
         String title = centerString(50, getString(R.string.setATimer));
         spinner.setPrompt(title);
-        player = MediaPlayer.create(this, R.raw.parad);
-        player.start();
+
+
+        player = MediaPlayer.create(this, R.raw.forest);
         player.setLooping(true);
+        player.start();
+
+
         PlayPause = this.findViewById(R.id.btnStart);
         ImageButton timerBtn = findViewById(R.id.timer);
         mTextViewCountDown = findViewById(R.id.textView);
@@ -80,6 +84,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
     public static String centerString (int width, String s) {
         return String.format("%-" + width  + "s", String.format("%" + (s.length() + (width - s.length()) / 2) + "s", s));
     }
+
     // Create a timer, after 15 seconds the sound volume decrease slowly
     public void timer(long s, long y){
         mTextViewCountDown.setVisibility(View.VISIBLE);
@@ -146,10 +151,6 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
             case 6:  timer(1800000, 1000);  break;
             case 7:  timer(2400000, 1000);  break;
             case 8:  timer(3600000, 1000);  break;
-            case 9:  timer(7200000, 1000);  break;
-            case 10: timer(14400000, 1000); break;
-            case 11: timer(21600000, 1000); break;
-            case 12: timer(28800000, 1000); break;
             default: stopCountdown(); break;
         }
     }
@@ -183,7 +184,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
 
         // It saves last pickers
         AtomicReference<SharedPreferences> sharedPref = new AtomicReference<>(getSharedPreferences(getString(R.string.FileName), MODE_PRIVATE));
-        int value = sharedPref.get().getInt(getString(R.string.Choise),-1);
+        int value = sharedPref.get().getInt(getString(R.string.Choice),-1);
         if(value != -1)
             pickerHours.setValue(value); // save the last selected item
         int value1 = sharedPref.get().getInt(getString(R.string.Choice1),-1);
@@ -197,7 +198,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
             int Choice1 = pickerMinutes.getValue();
             sharedPref.set(getSharedPreferences(getString(R.string.FileName), 0));
             SharedPreferences.Editor prefEditor = sharedPref.get().edit();
-            prefEditor.putInt(getString(R.string.Choise),Choice); // show last selected item
+            prefEditor.putInt(getString(R.string.Choice),Choice); // show last selected item
             prefEditor.putInt(getString(R.string.Choice1),Choice1); // show last selected item
             prefEditor.apply();
 
@@ -335,8 +336,7 @@ public class Forest extends AppCompatActivity implements AdapterView.OnItemSelec
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        player.stop();
-        player.release();
+        if (player != null) player.release();
     }
     // turn off a timer
     private void stopCountdown() {
