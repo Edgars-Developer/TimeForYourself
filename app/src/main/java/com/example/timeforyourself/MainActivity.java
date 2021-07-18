@@ -85,10 +85,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent10 = new Intent(this, Focused.class);
             startActivity(intent10);
             break;
-        case R.id.imb1:
-            Intent imb1 = new Intent (this, Configuration.class);
-            startActivity(imb1);
-            break;
         }
 
     }

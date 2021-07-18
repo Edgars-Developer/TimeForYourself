@@ -28,7 +28,7 @@ import static android.R.layout.simple_list_item_single_choice;
 
 
 public class Morning extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-    MediaPlayer player,player2;
+    MediaPlayer player;
     private TextView mTextViewCountDown;
     private CountDownTimer timer;
     private ImageButton PlayPause;
@@ -70,18 +70,14 @@ public class Morning extends AppCompatActivity implements AdapterView.OnItemSele
         //Click to play and pause music
         PlayPause.setOnClickListener(v -> {
 
-            if (player.isPlaying()||player2.isPlaying()) {
+            if (player.isPlaying()) {
                 PlayPause.setImageResource(R.drawable.play); // in java code :srcCompat="@drawable/"
                 player.pause();
-                player2.pause();
-                player2.reset();
-                player.reset();
             } else {
                 player.start();
                 PlayPause.setImageResource(R.drawable.pause);
-
             }
-        }); // One button can make two actions with
+        }); // One button can make two actions with switch ima
     }
 
     // Put spinner title in the text

@@ -49,11 +49,9 @@ public class Forest<async> extends AppCompatActivity implements AdapterView.OnIt
         String title = centerString(50, getString(R.string.setATimer));
         spinner.setPrompt(title);
 
-
         player = MediaPlayer.create(this, R.raw.forest);
         player.setLooping(true);
         player.start();
-
 
         PlayPause = this.findViewById(R.id.btnStart);
         ImageButton timerBtn = findViewById(R.id.timer);
